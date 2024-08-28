@@ -22,7 +22,7 @@ class SponsorController extends Controller
      */
     public function create()
     {
-        //
+        return view('Sponsor.create');
     }
 
     /**
@@ -30,7 +30,15 @@ class SponsorController extends Controller
      */
     public function store(StoreSponsorRequest $request)
     {
-        //
+        $request->validate([
+            'nama_sponsor'=>'require|max:255|unique:sponsors,nama_sponsor,'
+        ],[
+            'nama_sponsor.require'=>'Nama Wajib Diisi',
+            'nama_sponsor.unique'=>'Nama Sudah Ada'
+        ]);
+
+        Sponsor::create($request->all());
+        return redirect()->route('Sponsor.index')->with('Berhasil','Data Berhasil ditambahkan');
     }
 
     /**
