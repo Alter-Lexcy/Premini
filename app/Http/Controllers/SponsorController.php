@@ -14,7 +14,7 @@ class SponsorController extends Controller
     public function index()
     {
         $data = Sponsor::all();
-        return view('Sponsor.index',compact('data'));
+        return view('Sponsor.index', compact('data'));
     }
 
     /**
@@ -31,7 +31,7 @@ class SponsorController extends Controller
     public function store(StoreSponsorRequest $request)
     {
         Sponsor::create($request->all());
-        return redirect()->route('Sponsor.index')->with('Berhasil','Data Berhasil ditambahkan');
+        return redirect()->route('sponsors.index')->with('Berhasil', 'Data Berhasil ditambahkan');
     }
 
     /**
@@ -47,7 +47,7 @@ class SponsorController extends Controller
      */
     public function edit(Sponsor $sponsor)
     {
-        //
+        return view('Sponsor.update', compact('sponsor'));
     }
 
     /**
@@ -55,18 +55,20 @@ class SponsorController extends Controller
      */
     public function update(UpdateSponsorRequest $request, Sponsor $sponsor)
     {
-        //
+        $sponsor->update($request->all());
+        return redirect()->route('sponsors.index')->with('Berhasil','Data Berhasil Diubah');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Sponsor $sponsor)
+    public function destroy($id)
     {
-        try{
+        try {
+            $sponsor = Sponsor::findOrFail($id);
             $sponsor->delete();
-            return redirect()->route('Sponsor.index')->with('Berhasil', 'Data berhasil dihapus!');
-        }catch(\illuminate\Database\QueryException $e){
+            return redirect()->route('sponsors.index')->with('Berhasil', 'Data berhasil dihapus!');
+        } catch (\illuminate\Database\QueryException $e) {
             return redirect()->back()->withErrors('Data Tidak bisa dihapus karena masih berelasi');
         }
     }
