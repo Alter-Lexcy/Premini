@@ -10,7 +10,7 @@ class attendeController extends Controller
     
     public function index()
     {
-        $attendees = Attende::all();
+        $attendes = Attende::all();
         return view('attendes.index', compact('attendes'));
     }
 
@@ -19,7 +19,7 @@ class attendeController extends Controller
      */
     public function create()
     {
-        return view('attende.create');
+        return view('attendes.create');
     }
 
     /**
@@ -35,7 +35,7 @@ class attendeController extends Controller
 
         Attende::create($request->all());
 
-        return redirect()->route('attende.index')
+        return redirect()->route('attendes.index')
                          ->with('success', 'Attende created successfully.');
     }
 
