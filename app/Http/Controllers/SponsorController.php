@@ -30,13 +30,6 @@ class SponsorController extends Controller
      */
     public function store(StoreSponsorRequest $request)
     {
-        $request->validate([
-            'nama_sponsor'=>'require|max:255|unique:sponsors,nama_sponsor,'
-        ],[
-            'nama_sponsor.require'=>'Nama Wajib Diisi',
-            'nama_sponsor.unique'=>'Nama Sudah Ada'
-        ]);
-
         Sponsor::create($request->all());
         return redirect()->route('Sponsor.index')->with('Berhasil','Data Berhasil ditambahkan');
     }
@@ -70,6 +63,11 @@ class SponsorController extends Controller
      */
     public function destroy(Sponsor $sponsor)
     {
-        //
+        try{
+            $sponsor->delete();
+            return redirect()->route('Sponsor.index')->with('Berhasil', 'Data berhasil dihapus!');
+        }catch(\illuminate\Database\QueryException $e){
+            return redirect()->back()->withErrors('Data Tidak bisa dihapus karena masih berelasi');
+        }
     }
 }
