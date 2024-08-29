@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Attende;
+use App\Models\attende;
 use Illuminate\Http\Request;
 
 class attendeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    
     public function index()
     {
         $attendes = Attende::all();
