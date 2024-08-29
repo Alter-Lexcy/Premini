@@ -6,14 +6,10 @@ use App\Http\Controllers\attendeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Auth::routes();
 
 Route::middleware(['auth'])->group(function (){
-Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::resource('sponsors',SponsorController::class);
 Route::resource('attendes', attendeController::class);
 
