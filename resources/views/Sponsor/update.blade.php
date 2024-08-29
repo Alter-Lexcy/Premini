@@ -16,17 +16,18 @@
                         </ul>
                     </div>
                 @endif
-                <form action="{{ route('sponsors.store') }}" method="POST">
+                <form action="{{ route('sponsors.update',$sponsor->id)}}" method="POST">
                     @csrf
+                    @method('PUT')
                     <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">Nama Perusahaan</label>
                         <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                            name="nama_sponsor" value="{{ old('nama_sponsor') }}">
+                            name="nama_sponsor" value="{{$sponsor->nama_sponsor}}">
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">Kontribusi (opsional)</label>
                         <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                            name="kontribusi" value="{{ old('kontribusi') }}">
+                            name="kontribusi" value="{{ $sponsor->kontribusi }}">
                     </div>
                     <div class="mb-3 d-flex justify-content-between">
                         <a href="{{ route('sponsors.index') }}" class="btn btn-primary">Kembali</a>

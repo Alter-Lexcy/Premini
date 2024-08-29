@@ -31,7 +31,7 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="{{route('Sponsor.index')}}">Sponsor</a>
+                            <a class="nav-link active" aria-current="page" href="{{route('sponsors.index')}}">Sponsor</a>
                         </li>
                     </ul>
                     <!-- Right Side Of Navbar -->
