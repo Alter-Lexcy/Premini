@@ -14,7 +14,7 @@
         </div>
     @endif
 
-    <form action="{{ route('attende.store') }}" method="POST">
+    <form action="{{ route('attendes.store') }}" method="POST">
         @csrf
         <div class="form-group">
             <label for="nama">Nama:</label>
@@ -29,7 +29,7 @@
             <input type="text" name="phone" class="form-control" value="{{ old('phone') }}" required>
         </div>
         <button type="submit" class="btn btn-primary">Create</button>
-        <a href="{{ route('attende.index') }}" class="btn btn-secondary">Cancel</a>
+        <a href="{{ route('attendes.index') }}" class="btn btn-secondary">Cancel</a>
     </form>
 </div>
 @endsection

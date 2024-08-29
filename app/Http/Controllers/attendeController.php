@@ -11,7 +11,7 @@ class attendeController extends Controller
     public function index()
     {
         $attendees = Attende::all();
-        return view('attende.index', compact('attendees'));
+        return view('attendes.index', compact('attendes'));
     }
 
     /**

@@ -34,7 +34,7 @@
                     <td>{{ $attende->email }}</td>
                     <td>{{ $attende->phone }}</td>
                     <td>
-                        <a href="{{ route('attendes.show', $attende->id) }}" class="btn btn-info">View</a>
+                        
                         <a href="{{ route('attendes.edit', $attende->id) }}" class="btn btn-warning">Edit</a>
                         <form action="{{ route('attendes.destroy', $attende->id) }}" method="POST" style="display:inline;">
                             @csrf

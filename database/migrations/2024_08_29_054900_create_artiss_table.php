@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('venue', function (Blueprint $table) {
+        Schema::create('artiss', function (Blueprint $table) {
             $table->id();
-            $table->string('NamaPembuatEvent');
+            $table->string('artis')->unique();
             $table->timestamps();
         });
     }
@@ -23,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('venue');
+        Schema::dropIfExists('artis');
     }
 };
