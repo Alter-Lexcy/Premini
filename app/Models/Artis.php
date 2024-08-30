@@ -1,19 +1,16 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Attende extends Model
+class artis extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'nama',
-        'email',
-        'phone',
-    ];
+    protected $table = 'artiss';
 
-    
+    protected $fillable = [
+        'artis',
+    ];
 }

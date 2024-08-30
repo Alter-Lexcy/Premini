@@ -1,13 +1,14 @@
 <?php
-
 namespace App\Http\Controllers;
 
-use App\Models\attende;
+use App\Models\Attende;
 use Illuminate\Http\Request;
 
 class attendeController extends Controller
 {
-    
+    /**
+     * Display a listing of the resource.
+     */
     public function index()
     {
         $attendes = Attende::all();
@@ -29,8 +30,8 @@ class attendeController extends Controller
     {
         $request->validate([
             'nama' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:attendes',
-            'phone' => 'required|numeric',
+            'email' => 'required|string|email|max:255|unique:attendes,email',
+            'phone' => 'required|integer|unique:attendes,phone',
         ]);
 
         Attende::create($request->all());
@@ -44,7 +45,7 @@ class attendeController extends Controller
      */
     public function show(Attende $attende)
     {
-        return view('attende.show', compact('attende'));
+        return view('attendes.show', compact('attende'));
     }
 
     /**
@@ -52,7 +53,7 @@ class attendeController extends Controller
      */
     public function edit(Attende $attende)
     {
-        return view('attende.edit', compact('attende'));
+        return view('attendes.edit', compact('attende'));
     }
 
     /**
@@ -63,12 +64,12 @@ class attendeController extends Controller
         $request->validate([
             'nama' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:attendes,email,' . $attende->id,
-            'phone' => 'required|numeric',
+            'phone' => 'required|integer|unique:attendes,phone,' . $attende->id,
         ]);
 
         $attende->update($request->all());
 
-        return redirect()->route('attende.index')
+        return redirect()->route('attendes.index')
                          ->with('success', 'Attende updated successfully.');
     }
 
@@ -79,7 +80,7 @@ class attendeController extends Controller
     {
         $attende->delete();
 
-        return redirect()->route('attende.index')
+        return redirect()->route('attendes.index')
                          ->with('success', 'Attende deleted successfully.');
     }
 }
