@@ -5,7 +5,7 @@
     <div class="card">
         <div class="card-body fw-bold">
             <center>
-                <h1>ettende update</h1>
+                <h1>ettende edit</h1>
             </center>
 
 @if(session('success'))
@@ -37,8 +37,8 @@
         @csrf
         @method('PUT')
         <div class="form-group">
-            <label for="name">Name:</label>
-            <input type="text" name="name" class="form-control" value="{{ old('name', $attende->name) }}" required>
+            <label for="nama">Nama:</label>
+            <input type="text" name="nama" class="form-control" value="{{ old('nama', $attende->nama) }}" required>
         </div>
         <div class="form-group">
             <label for="email">Email:</label>
