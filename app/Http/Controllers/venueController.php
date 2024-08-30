@@ -1,4 +1,6 @@
 <?php
+
+
 namespace App\Http\Controllers;
 
 use App\Models\Venue;
@@ -12,7 +14,9 @@ class venueController extends Controller
     public function index()
     {
         $venues = Venue::all();
+
         return view('venues.index', compact('venues'));
+
     }
 
     /**
@@ -20,6 +24,7 @@ class venueController extends Controller
      */
     public function create()
     {
+
         return view('venues.create');
     }
 
@@ -43,7 +48,9 @@ class venueController extends Controller
      */
     public function show(Venue $venue)
     {
+
         return view('venues.show', compact('venue'));
+
     }
 
     /**
@@ -51,7 +58,9 @@ class venueController extends Controller
      */
     public function edit(Venue $venue)
     {
+
         return view('venues.edit', compact('venue'));
+
     }
 
     /**
