@@ -14,7 +14,7 @@ class venue extends Model
      *
      * @var string
      */
-    protected $table = 'venue';
+    protected $table = 'venues';
 
     /**
      * The attributes that are mass assignable.
@@ -25,3 +25,4 @@ class venue extends Model
         'NamaPembuatEvent',
     ];
 }
+

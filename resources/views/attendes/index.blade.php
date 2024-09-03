@@ -22,8 +22,9 @@
             </ul>
         </div>
     @endif
-        <div class="containe  d-flex justify-content-end mt-3">
-            <a href="{{ route('attendes.create') }}" class="btn btn-success mb-2">Tambah</a>
+        <div class="containe d-flex justify-content-between  mt-3 mb-2">
+            <a href="{{ route('tiket.create') }}" class="btn btn-info">Beli Tiket</a>
+            <a href="{{ route('attendes.create') }}" class="btn btn-success ">Tambah</a>
         </div>
         <table class="table">
             <thead>
@@ -46,12 +47,13 @@
                         <td>{{ $attende->email }}</td>
                         <td>{{ $attende->phone }}</td>
                         <td>
-                            
+
                             <a href="{{ route('attendes.edit', $attende->id) }}" class="btn btn-warning">Edit</a>
-                            <form action="{{ route('attendes.destroy', $attende->id) }}" method="POST" style="display:inline;">
+                            <form action="{{ route('attendes.destroy', $attende->id) }}" method="POST" class="d-inline">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-danger">Delete</button>
+                                <button type="submit" class="btn btn-danger"
+                                    onclick="return confirm('Yakin ingin menghapus Data ini?')">Hapus</button>
                             </form>
                         </td>
                     </tr>
