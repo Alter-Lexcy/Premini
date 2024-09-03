@@ -104,10 +104,15 @@ class attendeController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy(Attende $attende)
-    {
+{
+    try {
         $attende->delete();
-
         return redirect()->route('attendes.index')
-                         ->with('success', 'peserta berhasil di hapus.');
+                         ->with('success', 'Peserta berhasil dihapus.');
+    } catch (\Exception $e) {
+        return redirect()->route('attendes.index')
+                         ->with('error', 'Gagal menghapus Peserta . Pastikan Peserta  tidak terkait dengan data lain.');
     }
+}
+
 }

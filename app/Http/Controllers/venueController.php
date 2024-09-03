@@ -86,10 +86,16 @@ class venueController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy(Venue $venue)
-    {
+{
+    try {
         $venue->delete();
 
         return redirect()->route('venues.index')
-                         ->with('success', 'pemilik berhasil di hapus.');
+                         ->with('success', 'Pemilik berhasil dihapus.');
+    } catch (\Exception $e) {
+        return redirect()->route('venues.index')
+                         ->with('error', 'Gagal menghapus pemilik. Pastikan pemilik tidak terkait dengan data lain.');
     }
+}
+
 }

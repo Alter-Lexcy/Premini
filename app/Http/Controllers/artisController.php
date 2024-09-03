@@ -100,12 +100,16 @@ class artisController extends Controller
      * Remove the specified resource from storage.
      */
 
-    public function destroy(Artis $artiss)
-    {
-        $artiss->delete();
-
-        return redirect()->route('artiss.index')
-            ->with('success', 'Artis Berhasil Dihapus.');
-
-    }
+     public function destroy(Artis $artiss)
+     {
+         try {
+             $artiss->delete();
+             return redirect()->route('artiss.index')
+                 ->with('success', 'Artis Berhasil Dihapus.');
+         } catch (\Exception $e) {
+             return redirect()->route('artiss.index')
+                 ->with('error', 'Gagal menghapus artis. Pastikan artis tidak terkait dengan data lain.');
+         }
+     }
+     
 }

@@ -79,11 +79,16 @@ class CategoriController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy(Categori $categori)
-    {
+{
+    try {
         $categori->delete();
-
         return redirect()->route('categoris.index')
-                         ->with('success', 'kategori berhasil di hapus.');
+                         ->with('success', 'Kategori berhasil dihapus.');
+    } catch (\Exception $e) {
+        return redirect()->route('categoris.index')
+                         ->with('error', 'Gagal menghapus kategori. Pastikan kategori tidak terkait dengan data lain.');
     }
+}
+
 }
 
