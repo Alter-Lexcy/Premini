@@ -33,15 +33,19 @@ class artisController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-
             'artis' => 'required|string|max:255',
+        ], [
+            'artis.required' => 'Nama artis tidak boleh kosong.',
+            'artis.string' => 'Nama artis harus berupa teks.',
+            'artis.max' => 'Nama artis tidak boleh lebih dari 255 karakter.',
         ]);
+        
 
         Artis::create($request->all());
 
 
         return redirect()->route('artiss.index')
-            ->with('success', 'Artis created successfully.');
+            ->with('success', 'Artis Berhasil ditambahkan.');
 
     }
 
@@ -77,6 +81,10 @@ class artisController extends Controller
         // Validasi input
         $request->validate([
             'artis' => 'required|string|max:255',
+        ], [
+            'artis.required' => 'Nama artis tidak boleh kosong.',
+            'artis.string' => 'Nama artis harus berupa teks.',
+            'artis.max' => 'Nama artis tidak boleh lebih dari 255 karakter.',
         ]);
 
         // Update data artis
@@ -84,7 +92,7 @@ class artisController extends Controller
 
         // Redirect setelah berhasil update
         return redirect()->route('artiss.index')
-            ->with('success', 'Artis updated successfully.');
+            ->with('success', 'Artis Berhasil Diubah.');
 
     }
 
@@ -97,7 +105,7 @@ class artisController extends Controller
         $artiss->delete();
 
         return redirect()->route('artiss.index')
-            ->with('success', 'Artis deleted successfully.');
+            ->with('success', 'Artis Berhasil Dihapus.');
 
     }
 }

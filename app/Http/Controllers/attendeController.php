@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Attende;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class attendeController extends Controller
 {
@@ -31,13 +32,20 @@ class attendeController extends Controller
         $request->validate([
             'nama' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:attendes,email',
-            'phone' => 'required|integer|unique:attendes,phone',
+            'phone' => 'required|numeric|unique:attendes,phone',
+        ], [
+            'nama.required' => 'Nama tidak boleh kosong.',
+            'email.required' => 'Email tidak boleh kosong.',
+            'email.unique' => 'Email sudah terdaftar.',
+            'phone.required' => 'Nomor HP tidak boleh kosong.',
+            'phone.numeric' => 'Nomor HP tidak boleh menggunakan huruf.',
+            'phone.unique' => 'Nomor HP sudah terdaftar.',
         ]);
 
         Attende::create($request->all());
 
         return redirect()->route('attendes.index')
-                         ->with('success', 'Attende created successfully.');
+                         ->with('success', 'peserta berhasil di buat.');
     }
 
     /**
@@ -59,19 +67,38 @@ class attendeController extends Controller
     /**
      * Update the specified resource in storage.
      */
+
     public function update(Request $request, Attende $attende)
     {
         $request->validate([
             'nama' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:attendes,email,' . $attende->id,
-            'phone' => 'required|integer|unique:attendes,phone,' . $attende->id,
+            'email' => [
+                'required',
+                'string',
+                'email',
+                'max:255',
+                Rule::unique('attendes', 'email')->ignore($attende->id),
+            ],
+            'phone' => [
+                'required',
+                'numeric',
+                Rule::unique('attendes', 'phone')->ignore($attende->id),
+            ],
+        ], [
+            'nama.required' => 'Nama tidak boleh kosong.',
+            'email.required' => 'Email tidak boleh kosong.',
+            'email.unique' => 'Email sudah terdaftar.',
+            'phone.required' => 'Nomor HP tidak boleh kosong.',
+            'phone.numeric' => 'Nomor HP tidak boleh menggunakan huruf.',
+            'phone.unique' => 'Nomor HP sudah terdaftar.',
         ]);
-
+    
         $attende->update($request->all());
-
+    
         return redirect()->route('attendes.index')
-                         ->with('success', 'Attende updated successfully.');
+                         ->with('success', 'Peserta berhasil diupdate.');
     }
+    
 
     /**
      * Remove the specified resource from storage.
@@ -81,6 +108,6 @@ class attendeController extends Controller
         $attende->delete();
 
         return redirect()->route('attendes.index')
-                         ->with('success', 'Attende deleted successfully.');
+                         ->with('success', 'peserta berhasil di hapus.');
     }
 }

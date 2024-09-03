@@ -35,12 +35,14 @@ class venueController extends Controller
     {
         $request->validate([
             'NamaPembuatEvent' => 'required|string|max:255',
+        ], [
+            'NamaPembuatEvent.required' => 'Kolom pemilik tidak boleh kosong.',
         ]);
 
         Venue::create($request->all());
 
         return redirect()->route('venues.index')
-                         ->with('success', 'Venue created successfully.');
+                         ->with('success', 'pemilik berhasil di buat.');
     }
 
     /**
@@ -70,12 +72,14 @@ class venueController extends Controller
     {
         $request->validate([
             'NamaPembuatEvent' => 'required|string|max:255',
+        ], [
+            'NamaPembuatEvent.required' => 'Kolom pemilik tidak boleh kosong.',
         ]);
 
         $venue->update($request->all());
 
         return redirect()->route('venues.index')
-                         ->with('success', 'Venue updated successfully.');
+                         ->with('success', 'pemilik berhasil di perbarui.');
     }
 
     /**
@@ -86,6 +90,6 @@ class venueController extends Controller
         $venue->delete();
 
         return redirect()->route('venues.index')
-                         ->with('success', 'Venue deleted successfully.');
+                         ->with('success', 'pemilik berhasil di hapus.');
     }
 }

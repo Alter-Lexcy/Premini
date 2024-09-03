@@ -30,12 +30,15 @@ class CategoriController extends Controller
     {
         $request->validate([
             'categori' => 'required|string|max:255|unique:categoris,categori',
+        ], [
+            'categori.required' => 'Kolom kategori tidak boleh kosong.',
+            'categori.unique' => 'Kategori ini sudah ada.',
         ]);
 
         Categori::create($request->all());
 
         return redirect()->route('categoris.index')
-                         ->with('success', 'Categori created successfully.');
+                         ->with('success', 'kategori berhasil di buat.');
     }
 
     /**
@@ -60,13 +63,16 @@ class CategoriController extends Controller
     public function update(Request $request, Categori $categori)
     {
         $request->validate([
-            'categori' => 'required|string|max:255|unique:categoris,categori,' . $categori->id,
+            'categori' => 'required|string|max:255|unique:categoris,categori',
+        ], [
+            'categori.required' => 'Kolom kategori tidak boleh kosong.',
+            'categori.unique' => 'Kategori ini sudah ada.',
         ]);
 
         $categori->update($request->all());
 
         return redirect()->route('categoris.index')
-                         ->with('success', 'Categori updated successfully.');
+                         ->with('success', 'kategori berhasil di update.');
     }
 
     /**
@@ -77,7 +83,7 @@ class CategoriController extends Controller
         $categori->delete();
 
         return redirect()->route('categoris.index')
-                         ->with('success', 'Categori deleted successfully.');
+                         ->with('success', 'kategori berhasil di hapus.');
     }
 }
 

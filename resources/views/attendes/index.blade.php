@@ -8,11 +8,11 @@
     </div>
   </header>
     <div class="container mt-2">
-        @if (session('Berhasil'))
-            <div id="success-alert" class="alert alert-success alert-dismissible fade show" role="alert">
-                {{ session('Berhasil') }}
-            </div>
-        @endif
+        @if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
         @if ($errors->any())
         <div class="alert alert-danger">
             <ul>
