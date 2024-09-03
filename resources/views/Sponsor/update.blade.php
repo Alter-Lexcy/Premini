@@ -5,7 +5,7 @@
         <div class="card">
             <div class="card-body fw-bold">
                 <center>
-                    <h1>Tambah Sponsor</h1>
+                    <h1>Ubah Sponsor</h1>
                 </center>
                 @if ($errors->any())
                     <div class="alert alert-danger">
