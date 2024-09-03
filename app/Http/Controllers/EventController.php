@@ -18,7 +18,7 @@ class EventController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search');
-        $data = event::whereHas('category', function($query) use ($search) {
+        $data = event::whereHas('category', function ($query) use ($search) {
             $query->where('categori', 'LIKE', '%' . $search . '%');
         })->orWhere('nama_event', 'LIKE', '%' . $search . '%')->get();
 
@@ -143,12 +143,13 @@ class EventController extends Controller
      */
     public function destroy(event $event)
     {
-        $filename = $event->foto;
-
-        $event->delete();
-        Storage::disk('public')->delete($filename);
-        return redirect()->route('event.index')->with('Berhasil', 'Data Berhasil Dihapus');
+        try {
+            $filename = $event->foto;
+            $event->delete();
+            Storage::disk('public')->delete($filename);
+            return redirect()->route('event.index')->with('Berhasil', 'Data Berhasil Dihapus');
+        } catch (\Illuminate\Database\QueryException $e) {
+            return redirect()->back()->withErrors('Data Tidak Bisa Di hapus Karena Masih Berelasi');
+        }
     }
-
-
 }

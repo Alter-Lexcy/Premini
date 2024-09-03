@@ -6,7 +6,7 @@
                 <span class="fs-5">Event</span>
             </a>
                 <form method="GET" action="{{ route('event.index') }}">
-                    <input type="text" name="search" placeholder="Search..." value="{{ old('search', $search) }}">
+                    <input type="text" name="search" placeholder="Cari" value="{{ old('search', $search) }}">
                     <button  type="submit"  class="btn btn-link p-0 m-0"><i class="bi bi-search"></i></button>
                 </form>
         </div>

@@ -15,5 +15,5 @@ class Attende extends Model
         'phone',
     ];
 
-    
+
 }
