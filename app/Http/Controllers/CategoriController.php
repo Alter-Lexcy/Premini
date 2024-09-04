@@ -84,10 +84,9 @@ class CategoriController extends Controller
         $categori->delete();
         return redirect()->route('categoris.index')
                          ->with('success', 'Kategori berhasil dihapus.');
-    } catch (\Exception $e) {
-        return redirect()->route('categoris.index')
-                         ->with('error', 'Gagal menghapus kategori. Pastikan kategori tidak terkait dengan data lain.');
-    }
+     } catch (\Illuminate\Database\QueryException $e) {
+            return redirect()->back()->withErrors('Data Tidak Bisa Di hapus Karena Masih Berelasi');
+        }
 }
 
 }
