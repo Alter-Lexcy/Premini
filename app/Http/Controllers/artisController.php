@@ -106,10 +106,9 @@ class artisController extends Controller
              $artiss->delete();
              return redirect()->route('artiss.index')
                  ->with('success', 'Artis Berhasil Dihapus.');
-         } catch (\Exception $e) {
-             return redirect()->route('artiss.index')
-                 ->with('error', 'Gagal menghapus artis. Pastikan artis tidak terkait dengan data lain.');
-         }
+                } catch (\Illuminate\Database\QueryException $e) {
+                    return redirect()->back()->withErrors('Data Tidak Bisa Di hapus Karena Masih Berelasi');
+                }
      }
      
 }

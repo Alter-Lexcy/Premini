@@ -109,10 +109,9 @@ class attendeController extends Controller
         $attende->delete();
         return redirect()->route('attendes.index')
                          ->with('success', 'Peserta berhasil dihapus.');
-    } catch (\Exception $e) {
-        return redirect()->route('attendes.index')
-                         ->with('error', 'Gagal menghapus Peserta . Pastikan Peserta  tidak terkait dengan data lain.');
-    }
+     } catch (\Illuminate\Database\QueryException $e) {
+            return redirect()->back()->withErrors('Data Tidak Bisa Di hapus Karena Masih Berelasi');
+        }
 }
 
 }
