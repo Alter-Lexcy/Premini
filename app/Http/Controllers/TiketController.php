@@ -132,9 +132,22 @@ class TiketController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(tiket $tiket)
-    {
-        $tiket->delete();
-        return redirect()->route('tiket.index')->with('Berhasil','Data berhasil Dihapus');
-    }
+    /**
+ * Remove the specified resource from storage.
+ */
+public function destroy(tiket $tiket)
+{
+    // Ambil event terkait tiket
+    $event = Event::findOrFail($tiket->event_id);
+
+    // Kembalikan stok tiket ke event terkait
+    $event->stok += $tiket->jumlah_tiket;
+    $event->save();
+
+    // Hapus tiket
+    $tiket->delete();
+
+    return redirect()->route('tiket.index')->with('Berhasil', 'Pesanan berhasil dibatalkan, dan stok tiket telah dikembalikan.');
+}
+
 }
