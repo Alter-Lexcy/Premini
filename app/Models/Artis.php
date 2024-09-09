@@ -16,4 +16,7 @@ class artis extends Model
     protected $fillable = [
         'artis',
     ];
+    public function events(){
+        return $this->belongsToMany(event::class, 'eventartist', 'artis_id', 'event_id');
+    }
 }

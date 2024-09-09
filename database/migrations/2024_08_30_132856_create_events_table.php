@@ -17,10 +17,6 @@ return new class extends Migration
             $table->string('nama_event');
             $table->date('mulai');
             $table->date('berakhir');
-            $table->unsignedBigInteger('sponsor_id');
-            $table->foreign('sponsor_id')->references('id')->on('sponsors');
-            $table->unsignedBigInteger('artis_id');
-            $table->foreign('artis_id')->references('id')->on('artiss');
             $table->unsignedBigInteger('venue_id');
             $table->foreign('venue_id')->references('id')->on('venues');
             $table->unsignedBigInteger('categori_id');
