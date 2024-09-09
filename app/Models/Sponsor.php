@@ -12,4 +12,7 @@ class Sponsor extends Model
         'nama_sponsor',
         'kontribusi'
     ];
+    public function events(){
+        return $this->belongsToMany(event::class, 'eventsponsors', 'sponsor_id', 'event_id');
+    }
 }

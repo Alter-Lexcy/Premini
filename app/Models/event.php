@@ -13,23 +13,21 @@ class event extends Model
         'nama_event',
         'mulai',
         'berakhir',
-        'sponsor_id',
-        'artis_id',
         'venue_id',
         'categori_id',
         'stok',
     ];
 
-    public function sponsor(){
-        return $this->belongsTo(Sponsor::class);
-    }
-    public function artis(){
-        return $this->belongsTo(Artis::class);
-    }
     public function venue(){
         return $this->belongsTo(venue::class);
     }
     public function category(){
         return $this->belongsTo(Categori::class, 'categori_id');
+    }
+    public function artis(){
+        return $this->belongsToMany(Artis::class, 'eventartist', 'event_id', 'artis_id');
+    }
+    public function sponsor(){
+        return $this->belongsToMany(Sponsor::class, 'eventsponsors', 'event_id', 'sponsor_id');
     }
 }

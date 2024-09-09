@@ -49,7 +49,9 @@ class EventController extends Controller
             'mulai' => 'required|date',
             'berakhir' => 'required|date|after:mulai',
             'sponsor_id' => 'required',
+            'sponsor_id.*' => 'exists:sponsors,id',
             'artis_id' => 'required',
+            'artis_id.*' => 'exists:artiss,id',
             'venue_id' => 'required',
             'categori_id' => 'required',
             'stok' => 'required|numeric|min:0',
@@ -68,18 +70,20 @@ class EventController extends Controller
             'stok.min' => 'Stok tidak bisa dibawah 0',
         ]);
 
+        // dd($request);
         $img = $request->foto->store('poster', 'public');
-        event::create([
+        $event =  event::create([
             'foto' => $img,
             'nama_event' => $request->nama_event,
             'mulai' => $request->mulai,
             'berakhir' => $request->berakhir,
-            'sponsor_id' => $request->sponsor_id,
-            'artis_id' => $request->artis_id,
             'venue_id' => $request->venue_id,
             'categori_id' => $request->categori_id,
             'stok' => $request->stok
         ]);
+
+        $event->sponsor()->attach($request->sponsor_id);
+        $event->artis()->attach($request->artis_id);
         return redirect()->route('event.index')->with('Berhasil', 'Data berhasil Di tambahkan');
     }
 
@@ -97,12 +101,14 @@ class EventController extends Controller
      */
     public function edit(event $event)
     {
+        $sponsorTerpilih = $event->sponsor()->pluck('sponsors.id')->toArray();
+        $artisTerpilih = $event->artis()->pluck('artiss.id')->toArray();
         $sponsor = Sponsor::all();
         $artis = artis::all();
         $venue = venue::all();
         $category = Categori::all();
 
-        return view('event.update', compact('event', 'sponsor', 'artis', 'venue', 'category'));
+        return view('event.update', compact('event', 'sponsor', 'artis', 'venue', 'category','sponsorTerpilih','artisTerpilih'));
     }
 
     /**
@@ -124,14 +130,15 @@ class EventController extends Controller
         $event->nama_event = $request->nama_event;
         $event->mulai = $request->mulai;
         $event->berakhir = $request->berakhir;
-        $event->sponsor_id = $request->sponsor_id;
-        $event->artis_id = $request->artis_id;
         $event->venue_id = $request->venue_id;
         $event->categori_id = $request->categori_id;
         $event->stok = $request->stok;
 
         // Simpan perubahan
         $event->save();
+
+        $event->sponsor()->sync($request->sponsor_id);
+        $event->artis()->sync($request->artis_id);
 
         // Redirect atau respons setelah update berhasil
         return redirect()->route('event.index')->with('Berhasil', 'Event berhasil Diubah');

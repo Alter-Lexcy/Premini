@@ -92,13 +92,13 @@ class attendeController extends Controller
             'phone.numeric' => 'Nomor HP tidak boleh menggunakan huruf.',
             'phone.unique' => 'Nomor HP sudah terdaftar.',
         ]);
-    
+
         $attende->update($request->all());
-    
+
         return redirect()->route('attendes.index')
                          ->with('success', 'Peserta berhasil diupdate.');
     }
-    
+
 
     /**
      * Remove the specified resource from storage.
