@@ -7,6 +7,7 @@ use App\Models\event;
 use App\Models\venue;
 use App\Models\Sponsor;
 use App\Models\Categori;
+use App\Models\Roadmap;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -93,7 +94,9 @@ class EventController extends Controller
     public function show(event $event)
     {
         // dd($event->category->categori);
-        return view('event.show', compact('event'));
+        $dataroadmap = Roadmap::all();
+        $roadmap = $event->roadmap;
+        return view('event.show', compact('event','roadmap','dataroadmap'));
     }
 
     /**
