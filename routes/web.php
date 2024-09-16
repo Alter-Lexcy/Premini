@@ -7,6 +7,7 @@ use App\Http\Controllers\artisController;
 
 use App\Http\Controllers\CategoriController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\RoadmapController;
 use App\Http\Controllers\TiketController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -23,4 +24,6 @@ Route::resource('artiss', artisController::class);
 Route::resource('categoris', CategoriController::class);
 Route::resource('event',EventController::class);
 Route::resource('tiket',TiketController::class);
+Route::resource('roadmap', RoadmapController::class);
 });
+

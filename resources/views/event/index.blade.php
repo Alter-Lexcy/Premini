@@ -27,7 +27,8 @@
                 </ul>
             </div>
         @endif
-        <div class="container d-flex justify-content-end mt-3">
+        <div class="container d-flex justify-content-between mt-3">
+            <a href="{{route('roadmap.index')}}" class="btn btn-secondary mb-2">Lihat Roadmap</a>
             <a href="{{ route('event.create') }}" class="btn btn-success mb-2">Tambah</a>
         </div>
 
@@ -65,8 +66,8 @@
                                             </form>
                                         </li>
                                         <li><a class="dropdown-item text-warning"
-                                                href="{{ route('event.edit', $row->id) }}">Ubah</a></li>
-
+                                                href="{{ route('event.edit', $row->id) }}">Ubah</a>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>

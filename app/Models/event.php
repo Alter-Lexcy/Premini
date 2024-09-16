@@ -30,4 +30,5 @@ class event extends Model
     public function sponsor(){
         return $this->belongsToMany(Sponsor::class, 'eventsponsors', 'event_id', 'sponsor_id');
     }
+    
 }
