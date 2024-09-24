@@ -18,10 +18,13 @@ class EventController extends Controller
      */
     public function index(Request $request)
     {
+        // $search menyimpan perintah ketika user menekan code html dengan class search
         $search = $request->input('search');
+
+        //$data berisi perintah searching yang dimana tampilan nya akan muncul ketika user mencari sesuai dengan ketentuannya (Kategori dan nama)
         $data = event::whereHas('category', function ($query) use ($search) {
             $query->where('categori', 'LIKE', '%' . $search . '%');
-        })->orWhere('nama_event', 'LIKE', '%' . $search . '%')->get();
+        })->orWhere('nama_event', 'LIKE', '%' . $search . '%')->paginate(3); // paginate berfungsi untuk membuat halaman atau page baru ketika sudah melebihi limit index
 
         return view('event.index', compact('data', 'search'));
     }
@@ -31,10 +34,10 @@ class EventController extends Controller
      */
     public function create()
     {
-        $sponsor = Sponsor::all();
-        $artis = artis::all();
-        $venue = venue::all();
-        $category = Categori::all();
+        $sponsor = Sponsor::all(); // memanggil Data Sponsor
+        $artis = artis::all(); // memanggil Data Artis
+        $venue = venue::all(); // memanggil Data Venue
+        $category = Categori::all(); // memanggil Data Categori
 
         return view('event.create', compact('sponsor', 'artis', 'venue', 'category'));
     }
@@ -44,19 +47,21 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
+        // membuat validasi (pengecek-an)
         $request->validate([
             'foto' => 'required',
             'nama_event' => 'required|max:255|unique:events,nama_event',
             'mulai' => 'required|date',
             'berakhir' => 'required|date|after:mulai',
             'sponsor_id' => 'required',
-            'sponsor_id.*' => 'exists:sponsors,id',
+            'sponsor_id.*' => 'exists:sponsors,id', // * untuk data yang ber-array
             'artis_id' => 'required',
-            'artis_id.*' => 'exists:artiss,id',
+            'artis_id.*' => 'exists:artiss,id', // * untuk data yang ber-array
             'venue_id' => 'required',
             'categori_id' => 'required',
             'stok' => 'required|numeric|min:0',
         ], [
+            // untuk messange jika ada yang salah atau messange untuk validasinya
             'foto.required' => 'Foto belum diisi',
             'nama_event.required' => 'Nama event Belum diisi',
             'nama_event.unique' => 'Nama event sudah ada',
@@ -72,7 +77,8 @@ class EventController extends Controller
         ]);
 
         // dd($request);
-        $img = $request->foto->store('poster', 'public');
+        $img = $request->foto->store('poster', 'public'); // berisi perintah ketika user sudah menambahkan file gambar, filenya akan tersimpan pada folder poster yang berada didalam folder public
+        // $event berisi tentang perintah untuk membuat data, sebelum membuat data sesuai dengan inputan user akan dicek terlebih dahulu oelah request (validasi)
         $event =  event::create([
             'foto' => $img,
             'nama_event' => $request->nama_event,
@@ -83,8 +89,9 @@ class EventController extends Controller
             'stok' => $request->stok
         ]);
 
-        $event->sponsor()->attach($request->sponsor_id);
-        $event->artis()->attach($request->artis_id);
+
+        $event->sponsor()->attach($request->sponsor_id); // menambahkan data sponsor ke dalam tabel pivot EventSponsor
+        $event->artis()->attach($request->artis_id); // menambahkan data artis ke dalam tabel pivot EventArtis
         return redirect()->route('event.index')->with('Berhasil', 'Data berhasil Di tambahkan');
     }
 
@@ -94,7 +101,7 @@ class EventController extends Controller
     public function show(event $event)
     {
         // dd($event->category->categori);
-        $dataroadmap = Roadmap::all();
+        $dataroadmap = Roadmap::all(); // menampilkan data Roadmap
         $roadmap = $event->roadmap;
         return view('event.show', compact('event','roadmap','dataroadmap'));
     }
@@ -104,8 +111,8 @@ class EventController extends Controller
      */
     public function edit(event $event)
     {
-        $sponsorTerpilih = $event->sponsor()->pluck('sponsors.id')->toArray();
-        $artisTerpilih = $event->artis()->pluck('artiss.id')->toArray();
+        $sponsorTerpilih = $event->sponsor()->pluck('sponsors.id')->toArray(); // mengambil data dari pivot dengan format array
+        $artisTerpilih = $event->artis()->pluck('artiss.id')->toArray(); // mengambil data dari pivot dengan format array
         $sponsor = Sponsor::all();
         $artis = artis::all();
         $venue = venue::all();
@@ -119,17 +126,20 @@ class EventController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // mencari dulu id-nya
         $event = Event::findOrFail($id);
 
+        // mengambil data foto
         if ($request->hasFile('foto')) {
+            // jika foto ada data-nya maka nanti akan dihapus
             if ($event->foto) {
                 Storage::disk('public')->delete($event->foto);
             }
-
+            // setelah hapus akan digantikan dengan yang baru
             $img = $request->foto->store('poster', 'public');
             $event->foto = $img;
         }
-
+        //  mengupdate data event
         $event->nama_event = $request->nama_event;
         $event->mulai = $request->mulai;
         $event->berakhir = $request->berakhir;
@@ -140,8 +150,8 @@ class EventController extends Controller
         // Simpan perubahan
         $event->save();
 
-        $event->sponsor()->sync($request->sponsor_id);
-        $event->artis()->sync($request->artis_id);
+        $event->sponsor()->sync($request->sponsor_id); // menyinkronkan data yang ada di dalam tabel pivot
+        $event->artis()->sync($request->artis_id); // menyinkronkan data yang ada di dalam tabel pivot
 
         // Redirect atau respons setelah update berhasil
         return redirect()->route('event.index')->with('Berhasil', 'Event berhasil Diubah');
@@ -153,12 +163,13 @@ class EventController extends Controller
      */
     public function destroy(event $event)
     {
+        // jika tidak masalah akan langsung diarah kan ke try
         try {
             $filename = $event->foto;
             $event->delete();
-            Storage::disk('public')->delete($filename);
+            Storage::disk('public')->delete($filename); // menghapus data  foto yang ada didalam public
             return redirect()->route('event.index')->with('Berhasil', 'Data Berhasil Dihapus');
-        } catch (\Illuminate\Database\QueryException $e) {
+        } catch (\Illuminate\Database\QueryException $e) { // jika ada yang error pada database-nya
             return redirect()->back()->withErrors('Data Tidak Bisa Di hapus Karena Masih Berelasi');
         }
     }

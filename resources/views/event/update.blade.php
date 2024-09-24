@@ -48,6 +48,7 @@
                             <input type="date" class="form-control" id="berakhir" name="berakhir" value="{{ $event->berakhir }}">
                         </div>
                     </div>
+                    {{-- Menampilkan select sesuai data yang ada disponsor --}}
                     <div class="mb-3">
                         <label for="Sponsor" class="form-label">Sponsor</label>
                         <select class="form-control js-example-basic-multiple" id="Sponsor" name="sponsor_id[]" multiple="multiple">
@@ -58,6 +59,7 @@
                             @endforeach
                         </select>
                     </div>
+                    {{-- Menampilkan select sesuai data yang ada diartis --}}
                     <div class="mb-3">
                         <label for="artis" class="form-label">Nama Artis</label>
                         <select class="form-control js-example-basic-multiple" id="artis" name="artis_id[]" multiple="multiple">

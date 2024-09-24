@@ -15,6 +15,7 @@ class Roadmap extends Model
     ];
 
     public function event(){
+        /// format untuk relasi one to many
         return $this->belongsTo(event::class);
     }
 }

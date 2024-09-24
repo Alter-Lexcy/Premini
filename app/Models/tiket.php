@@ -16,10 +16,12 @@ class tiket extends Model
 
     public function peserta()
     {
+        // format untuk relasi one to many
         return $this->belongsTo(Attende::class,'Nama_id');
     }
     public function event()
     {
+        // format untuk relasi one to many
         return $this->belongsTo(event::class);
     }
 }

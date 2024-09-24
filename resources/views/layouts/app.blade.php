@@ -33,13 +33,13 @@
                                 <a class="nav-link active fw-bolder" aria-current="page" href="{{ route('event.index') }}">Event</a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link active fw-bolder" aria-current="page" href="{{ route('roadmap.index') }}">RoadMap</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link active fw-bolder" aria-current="page" href="{{ route('attendes.index') }}">Peserta</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link active fw-bolder" aria-current="page" href="{{ route('tiket.index') }}">Tiket</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link active fw-bolder" aria-current="page" href="{{ route('roadmap.index') }}">RoadMap</a>
                             </li>
                             <li class="nav-item ms-auto"> <!-- Tambahkan ms-auto di sini -->
                                 <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
