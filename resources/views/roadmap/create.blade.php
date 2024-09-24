@@ -51,6 +51,8 @@
             </div>
         </div>
     </div>
+
+    {{-- script untuk membuat multi-form --}}
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             let formCount = 1;

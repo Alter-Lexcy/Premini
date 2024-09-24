@@ -13,6 +13,7 @@ class Sponsor extends Model
         'kontribusi'
     ];
     public function events(){
+        // format untuk relasi many to many, yang mengirim data nya ke eventsponsors
         return $this->belongsToMany(event::class, 'eventsponsors', 'sponsor_id', 'event_id');
     }
 }

@@ -38,7 +38,7 @@
                     <div class="card shadow p-3 mb-5 bg-body-tertiary rounded"
                         style="width: 100%; border-radius: 10px; overflow: hidden;">
                         <img src="{{ asset('storage/' . $row->foto) }}" class="card-img-top"
-                            style="width: 100%; height: 200px; object-fit: cover;" alt="{{ $row->nama_event }}">
+                            style="width: 100%; height: 30vh; object-fit: cover;" alt="{{ $row->nama_event }}">
                         <div class="card-body">
                             <center>
                                 <h5 class="card-title fw-bold">{{ $row->nama_event }}</h5>
@@ -71,12 +71,14 @@
                                     </ul>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
             @endforeach
-
+            <div class="d-flex justify-content-center mt-3">
+                {{-- untuk memanggil page baru untuk sistem paginate --}}
+                {{ $data->links('pagination::bootstrap-5') }}
+            </div>
         </div>
     </div>
 @endsection

@@ -17,6 +17,7 @@ class artis extends Model
         'artis',
     ];
     public function events(){
+         // format untuk relasi many to many, yang mengirim data nya ke eventartist
         return $this->belongsToMany(event::class, 'eventartist', 'artis_id', 'event_id');
     }
 }

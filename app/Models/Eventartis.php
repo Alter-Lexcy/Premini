@@ -14,9 +14,9 @@ class Eventartis extends Model
     ];
 
     public function event(){
-        return $this->belongsTo(Event::class,'event_id');
+        return $this->belongsTo(Event::class,'event_id'); // relasi dengan event dan sebagai yang mengambil data
     }
     public function artis(){
-        return $this->belongsTo(Artis::class,'artis_id');
+        return $this->belongsTo(Artis::class,'artis_id'); // relasi dengan artis dan sebagai yang mengambil data
     }
 }

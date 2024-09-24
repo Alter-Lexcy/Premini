@@ -12,8 +12,7 @@ class artisController extends Controller
      */
     public function index()
     {
-        $artiss = Artis::all();
-
+        $artiss = Artis::all(); // Mengambil Data Dari artis
         return view('artiss.index', compact('artiss'));
 
     }
@@ -32,16 +31,18 @@ class artisController extends Controller
      */
     public function store(Request $request)
     {
+        //  Validasi Data
         $request->validate([
             'artis' => 'required|string|max:255',
         ], [
+            // mesangge validasi
             'artis.required' => 'Nama artis tidak boleh kosong.',
             'artis.string' => 'Nama artis harus berupa teks.',
             'artis.max' => 'Nama artis tidak boleh lebih dari 255 karakter.',
         ]);
-        
 
-        Artis::create($request->all());
+
+        Artis::create($request->all()); // membuat semua data sesuai dengan inputan user
 
 
         return redirect()->route('artiss.index')
@@ -82,6 +83,7 @@ class artisController extends Controller
         $request->validate([
             'artis' => 'required|string|max:255',
         ], [
+            // mesangge validasi
             'artis.required' => 'Nama artis tidak boleh kosong.',
             'artis.string' => 'Nama artis harus berupa teks.',
             'artis.max' => 'Nama artis tidak boleh lebih dari 255 karakter.',
@@ -110,5 +112,5 @@ class artisController extends Controller
                     return redirect()->back()->withErrors('Data Tidak Bisa Di hapus Karena Masih Berelasi');
                 }
      }
-     
+
 }

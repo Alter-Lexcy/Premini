@@ -19,16 +19,20 @@ class event extends Model
     ];
 
     public function venue(){
+        // format untuk relasi one to many
         return $this->belongsTo(venue::class);
     }
     public function category(){
+        // format untuk relasi one to many
         return $this->belongsTo(Categori::class, 'categori_id');
     }
     public function artis(){
+         // format untuk relasi many to many, yang mengirim data nya ke eventartist
         return $this->belongsToMany(Artis::class, 'eventartist', 'event_id', 'artis_id');
     }
     public function sponsor(){
+         // format untuk relasi many to many, yang mengirim data nya ke eventsponsors
         return $this->belongsToMany(Sponsor::class, 'eventsponsors', 'event_id', 'sponsor_id');
     }
-    
+
 }

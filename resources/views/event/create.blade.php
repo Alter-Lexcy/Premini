@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
+
+{{-- untuk memanggil select2 --}}
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
@@ -26,7 +28,7 @@
                         <img id="preview-selected-image" class="img-thumbnail shadow p-1 mb-4 bg-body-tertiary" style="max-width: 25%; height: auto;" />
                     </div>
                     <div class="mb-3">
-                        <label for="poster" class="form-label">Poster</label>
+                        <label for="poster" class="form-label">Poster (Landscape)</label>
                         <input type="file" class="form-control" id="poster" name="foto" value="{{ old('foto') }}" onchange="previewImage(event);">
                     </div>
                     <div class="mb-3">
@@ -90,6 +92,7 @@
         </div>
     </div>
 
+{{-- script untuk preview dan select 2 --}}
 <script>
     const previewImage = (event) => {
         const files = event.target.files;
