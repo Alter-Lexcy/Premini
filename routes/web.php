@@ -25,6 +25,5 @@ Route::resource('categoris', CategoriController::class);
 Route::resource('event',EventController::class);
 Route::resource('tiket',TiketController::class);
 Route::resource('roadmap', RoadmapController::class);
-
 });
 

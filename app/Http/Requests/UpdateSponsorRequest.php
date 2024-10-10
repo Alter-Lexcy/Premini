@@ -27,7 +27,8 @@ class UpdateSponsorRequest extends FormRequest
                 'required',
                 'string',
                 'max:255',
-                Rule::unique('sponsors', 'nama_sponsor')->ignore($this->sponsor->id)
+                Rule::unique('sponsors', 'nama_sponsor')
+                ->ignore($this->sponsor->id)
             ]
 
         ];
