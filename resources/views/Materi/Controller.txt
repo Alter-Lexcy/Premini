@@ -1,0 +1,50 @@
+// Direktory -> struktur folder yang digunakan untuk mengatur file dan komponen dalam laravel
+// @section -> untuk memisahkan antara konten extend dan konten tambahan
+// @extends -> untuk memanggil file lain
+
+
+
+  #SEARCHING
+- Membuat Suatu Variabel untuk menyimpan data inputan user yang melalui $request
+- fungsi $request ->input('search') digunakan untuk mengambil data input dari form search
+- WhereHas berfungsi menfilter data berdasarkan relasi yang ada di dalam model, contoh
+  whereHas('category', function ($query)) -> query ini akan menfilter data berdasarkan tabel category
+- use ($search) digunakan untuk membawah data $search yang udah dibikin ke dalam sistem query
+- $query->where('categori', 'LIKE', '%' . $search . '%'); -> berfungsi mencari index yang cocok dengan kategori yang di-inputkan oleh user
+                                                          -> LIKE berfungsi memunculkan index yang memiliki kesamaan sebagian dengan inputan user
+                                                          -> % biasanya digunakan bersamaan dengan operator LIKE dahn berfungsi mengantikan karakter yang lebih dan nol
+                                                          -> $search digunakan untuk mengambil data inputan user
+- orWhere berfungsi mencari data index sesuai kata kunci yang diinputkan oleh user sama seperti where tapi ini berfungsi memunculkan selain kaat kunci yang ada di where
+- paginate() berfungsi membatasi tampilan menjadi beberapa halaman yang bertujuan mempermudah dalam navigasi data
+- return view('event.index') -> berfungsi untuk memuat dan mengembalikan data tampilan kepada user
+- compact() -> membuat data array berdasarkan data yang ada didalam compact atau didalam kurung
+
+
+  #UPLOAD FILE IMAGE
+// Create
+- $img = $request->foto->store('poster', 'public'); -> $request->foto berfungsi mengambil data foto dari form foto melalui $request
+                                                    -> store('poster', 'public') berfungsi menyimpan data foto ke dalam folder poster yang berada didalam direktory public
+                                                    -> hasil dari store akan tersimpan dalam variabel $img
+- jika sudah tersimpan pada variabel $img nanti akan dimasukan dalam kolom foto melalui code " 'foto' => $img, " yang berada pada code create
+// Update
+- if ($request->hasFile('foto')){...} -> berfungsi untuk pengecekan pada kolom foto apakah sudah ada atau belum
+- if ($event->foto) { Storage::disk('public')->delete($event->foto); } -> berfungsi setelah melakukan pengecekan, jika user menginputkan file foto baru, maka file yang lama akan terhapus dalam direktory public dan akan digantikan dengan yang baru
+- $img = $request->foto->store('poster', 'public'); -> berfungsi nya sama seperti create foto, kode ini akan mengambil data foto dari inputan user lalu menyimpan data foto didalam folder poster yang ada direktory public
+- $event->foto = $img; -> berfungsi memperbarui atribut foto pada objek $event (Variabel yang menyimpan semua data) dengan file yang baru saja di simpan
+// delete
+- $filename = $event->foto; -> berfungsi untuk mengambil data foto dan menyimpan-nya dalam  variabel $filename
+- Stroge::disk('public')->delete($filename)-> berfungsi jika index sudah terhapus maka kode ini akan mencari file foto berdasarkan nama yang disimpan lalu dihpus dari direktory public
+
+
+
+  # TABEL PIVOT (MANY TO MANY);
+- membuat tabel terlebih dahulu untuk menyimpan 2 data dari tabel yang berbeda, seperti contoh Tabel EventArtis mengambil data dari tabel Event dan tabel artis
+- Relasi yang dipakai adalah belongsToMany
+- perbedaan antara belongsTo Dan belongsToMany adalah terletak pada penggunaan yaitu jika belongsTo digunakan untuk relasi one to many sedangkan belongsToMany digunakan untuk Relasi Many to Many
+- $event->sponsor()->attach($request->sponsor_id); -> menambahkan data sponsor ke tabel pivot tanpa menghapus data yang lama
+  $event->artis()->attach($request->artis_id); -> menambahkan data artis ke tabel pivot tanpa menghapus data yang lama
+- $event->sponsor()->sync($request->sponsor_id) -> membuat data sponsor yang baru dan menghapus data yang sudah relevan / lama
+  $event->artis()->sync($request->artis_id) -> membuat data artis yang baru dena mneghapus data artis yang lama / relevan
+
+  # Sistem RoadMap
+- 

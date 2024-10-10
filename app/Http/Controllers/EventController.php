@@ -18,11 +18,11 @@ class EventController extends Controller
      */
     public function index(Request $request)
     {
-        // $search menyimpan perintah ketika user menekan code html dengan class search
+        // mendapatkan data dari form search melalui request dan di simpan di Variable $seacrh
         $search = $request->input('search');
 
         //$data berisi perintah searching yang dimana tampilan nya akan muncul ketika user mencari sesuai dengan ketentuannya (Kategori dan nama)
-        $data = event::whereHas('category', function ($query) use ($search) {
+        $data = event::with(['category', 'artis', 'sponsor', 'venue'])->whereHas('category', function ($query) use ($search) {
             $query->where('categori', 'LIKE', '%' . $search . '%');
         })->orWhere('nama_event', 'LIKE', '%' . $search . '%')->paginate(3); // paginate berfungsi untuk membuat halaman atau page baru ketika sudah melebihi limit index
 
@@ -78,7 +78,7 @@ class EventController extends Controller
 
         // dd($request);
         $img = $request->foto->store('poster', 'public'); // berisi perintah ketika user sudah menambahkan file gambar, filenya akan tersimpan pada folder poster yang berada didalam folder public
-        // $event berisi tentang perintah untuk membuat data, sebelum membuat data sesuai dengan inputan user akan dicek terlebih dahulu oelah request (validasi)
+        // $event berisi tentang perintah untuk membuat data, sebelum membuat data sesuai dengan inputan user akan dicek terlebih dahulu oleh request (validasi)
         $event =  event::create([
             'foto' => $img,
             'nama_event' => $request->nama_event,
